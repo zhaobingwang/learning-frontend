@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>网页尺寸大小</title>
+  </head>
+  <body>
+    <section id="devicePixelRatio"></section>
+    <section>
+      <button id="boundingClientRect">getBoundingClientRect</button>
+    </section>
+    <section id="clientSize"></section>
+    <section id="screenSize"></section>
+    <script>
+      function displayAllSize() {
+        // 当前缩放比例
+        document.getElementById(
+          'devicePixelRatio'
+        ).innerHTML = `[当前缩放比例]: ${window.devicePixelRatio}`;
+
+        // 浏览器的可视区域的宽和高
+        const clientWidth = document.documentElement.clientWidth;
+        const clientHeight = document.documentElement.clientHeight;
+        document.getElementById(
+          'clientSize'
+        ).innerHTML = `[浏览器的可视区域的宽和高]: clientWidth: ${clientWidth}, clientHeight: ${clientHeight}`;
+
+        // 浏览器的可视区域的宽和高
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        document.getElementById(
+          'screenSize'
+        ).innerHTML = `[浏览器的可视区域的宽和高]: screenWidth: ${screenWidth}, screenHeight: ${screenHeight}`;
+      }
+
+      window.addEventListener('resize', displayAllSize);
+      document
+        .getElementById('boundingClientRect')
+        .addEventListener('click', function (evt) {
+          const bounds = evt.target.getBoundingClientRect();
+          console.log(bounds);
+        });
+
+      displayAllSize();
+    </script>
+  </body>
+</html>
