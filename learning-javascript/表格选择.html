@@ -8,61 +8,71 @@
     <style>
       #root {
         position: relative;
-        width: 250px;
-        height: 150px;
+        box-sizing: border-box;
+        width: 335px;
+        height: 350px;
         border: 1px solid #000;
         /* display: none; */
-        background-color: gold;
+        background-color: #ffffff;
         z-index: 999;
+        padding: 30px;
       }
-      #root div {
+      #root div.t {
         position: relative;
         border: 1px solid #000;
         width: 30px;
         height: 30px;
+        box-sizing: border-box;
         display: inline-block;
-        margin-left: 10px;
-        margin-top: 10px;
-        /* background-color: red; */
-        /* z-index: 1; */
+        margin-right: 5px;
+        background-color: #f8f8f8;
+      }
+      #root .t-row {
+        width: 275px;
+        box-sizing: border-box;
+      }
+      #root .t-row > div:last-child {
+        margin-right: 0;
       }
 
-      .selected {
-        background-color: red;
+      #root div.selected {
+        background-color: #dceafb;
+      }
+      #info {
+        text-align: center;
       }
     </style>
   </head>
   <body>
     <button onclick="show()" onmouseover="show()">show</button>
-    <div id="root">
-      <!-- <div id="t11" class="t" onmouseenter="test(11)">11</div>
-      <div id="t12" class="t" onmouseenter="test(12)">12</div>
-      <div id="t13" class="t" onmouseenter="test(13)">13</div>
+    <br />
+    <br />
 
-      <div id="t21" class="t" onmouseenter="test(21)">21</div>
-      <div id="t22" class="t" onmouseenter="test(22)">22</div>
-      <div id="t23" class="t" onmouseenter="test(23)">23</div> -->
-    </div>
-    <div id="txt"></div>
+    <div id="root"></div>
+
+    <br />
+    <div id="txt">1</div>
+
+    <br />
+    <div>1</div>
+    <div>2</div>
   </body>
   <script>
+    let row = 0;
+    let column = 0;
     function show() {
       const obj = document.getElementById('root');
       obj.style.display = 'block';
     }
 
-    // document
-    //   .getElementsByClassName('t')
-    //   .addEventListener('onmouseenter', () => {
-    //     console.log(111);
-    //   });
     function test(val, totalRow, totalColumn) {
       console.log(val, totalRow, totalColumn);
-      document.getElementById('txt').innerHTML = val;
+      document.getElementById('info').innerHTML = val;
 
       const data = val.split('-');
-      let row = parseInt(data[0]);
-      let column = parseInt(data[1]);
+
+      row = parseInt(data[0]);
+      column = parseInt(data[1]);
       for (let i = 1; i <= totalRow; i++) {
         for (let j = 1; j <= totalColumn; j++) {
           if (i <= row && j <= column) {
@@ -76,21 +86,27 @@
 
     function build() {
       const obj = document.getElementById('root');
-      const row = 3;
-      const column = 5;
+      const row = 8;
+      const column = 8;
       let html = '';
       for (let i = 1; i <= row; i++) {
+        html += '<div class="t-row">';
         for (let j = 1; j <= column; j++) {
           //   const val = ``;
           //   console.log(val);
           html += `<div id="${i}-${j}" class="t" onmouseenter="test('${i}-${j}',${row},${column})"></div>`;
         }
+        html += '</div>';
       }
+      html += '<div id="info"><div>';
       obj.innerHTML = html;
     }
 
     window.onload = function () {
       build();
+      document.getElementById('root').addEventListener('click', (e) => {
+        console.log('end', row, column);
+      });
     };
   </script>
 </html>
