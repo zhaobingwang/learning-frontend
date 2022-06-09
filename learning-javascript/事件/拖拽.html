@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>鼠标拖拽</title>
+    <style>
+      div {
+        width: 300px;
+        height: 200px;
+        border: 1px solid #000;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="container"
+      ondragenter="dragEnter(event)"
+      ondragover="dragOver(event)"
+      ondrop="drop(event)"
+    ></div>
+    <div>
+      <span
+        id="text"
+        draggable="true"
+        ondragstart="dragStart(event)"
+        ondrag="dragIng(event)"
+        ondragend="dragEnd(event)"
+        ondragleave="dragLeave(event)"
+        >这是一段文字</span
+      >
+    </div>
+  </body>
+  <script>
+    function dragStart(e) {
+      console.log('drag start...');
+      e.dataTransfer.setData('Text', e.target.id);
+    }
+    function dragIng(e) {
+      // console.log('drag ing...');
+    }
+    function dragEnd(e) {
+      console.log('drag end...', e);
+    }
+    function dragOver(e) {
+      console.log('drag over...');
+      e.preventDefault();
+    }
+    function dragLeave(e) {
+      console.log('drag leave...', e);
+    }
+    function drop(e) {
+      e.preventDefault();
+      const data = e.dataTransfer.getData('Text');
+      e.target.appendChild(document.getElementById(data));
+      console.log('drop...');
+    }
+    function dragEnter(e) {
+      console.log('drag enter...', e);
+    }
+  </script>
+</html>

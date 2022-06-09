@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table border="1px">
+      <tbody id="menuTree" class="menuTree">
+        <tr onmousemove="movear(event)" onmouseleave="mleave()">
+          <td class="a" style="min-width: 10px">123</td>
+          <td class="b" style="min-width: 10px">456</td>
+          <td style="min-width: 10px">789</td>
+        </tr>
+        <tr>
+          <td><p>1212121</p></td>
+          <td>456</td>
+          <td>789</td>
+        </tr>
+        <tr>
+          <td>123</td>
+          <td>456</td>
+          <td>789</td>
+        </tr>
+        <tr>
+          <td>123</td>
+          <td>456</td>
+          <td>789</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+  <script type="text/javascript">
+    // 处理第一条边框线的状态
+    var aisDrag = null;
+    var aclick = null;
+    // 处理第二条边框线的状态
+    var bisDrag = null;
+    var bclick = null;
+    var mouseStatu = null;
+    // 鼠标移动到边框线范围之后变化样式并获取第一列和第二列td的宽度和offset(left)的总和
+    function movear(e) {
+      // 第一列
+      var atdleft = $('.a').offset();
+      var ase = atdleft.left + $('.a').width() - 10;
+      var aright = ase + 55;
+      // 第二列
+      var btdleft = $('.b').offset();
+      var bse = btdleft.left + $('.b').width() - 10;
+      var bright = bse + 55;
+      // 根据鼠标位置来判断当前处于哪一列的边框线
+      if (ase < e.pageX && e.pageX < aright) {
+        console.log(123);
+        // 第一列
+        // 让aclick为true触发下面的点击拖动事件
+        aclick = true;
+        // 更改鼠标的样式
+        $('table').css('cursor', 'e-resize');
+      } else if (bse < e.pageX && e.pageX < bright) {
+        console.log(456);
+        // 第二列
+        // 让bclick为true触发下面的点击拖动事件
+        bclick = true;
+        // 更改鼠标的样式
+        $('table').css('cursor', 'e-resize');
+      } else {
+        // 如果不在范围内就禁锢状态
+        aclick = false;
+        bclick = false;
+        aisDrag = false;
+        bisDrag = false;
+        // 鼠标样式还原
+        $('table').css('cursor', 'auto');
+      }
+    }
+    // 通过鼠标按下事件来监听鼠标移动事件
+    document.addEventListener('mousedown', function () {
+      // 鼠标按下之后mouseStatu为false防止触发mouseleave事件
+      mouseStatu = false;
+      if (aclick) {
+        aisDrag = true;
+        document.onmousemove = function (a) {
+          if (aisDrag) {
+            // 让第一列的宽度等于当前鼠标的offset（left）值
+            var apageX = a.pageX - 10;
+            $('tr td:nth-child(1)').width(apageX);
+          }
+        };
+      }
+      if (bclick) {
+        bisDrag = true;
+        document.onmousemove = function (a) {
+          if (bisDrag) {
+            // 让第二列的宽度等于当前鼠标的offset（left）值减去第一列的宽度
+            var bpageX = a.pageX - $('tr td:nth-child(1)').width();
+            $('tr td:nth-child(2)').width(bpageX - 15);
+          }
+        };
+      }
+      // 如果还有第三列可以依次类推，好心人可以帮我封个函数发给我
+    });
+    // 鼠标松开之后让所有状态为false
+    document.addEventListener('mouseup', function () {
+      // 鼠标松开之后让mouseStatu为true 触发离开事件清除状态
+      mouseStatu = true;
+      aclick = false;
+      aisDrag = false;
+      bisDrag = false;
+      bclick = false;
+    });
+    // 鼠标离开之后再次清空状态 防止出现拖动完第二列的表格之后，点击别处仍然可以触发一次鼠标拖动第二列的BUG
+    function mleave(params) {
+      if (mouseStatu) {
+        aclick = false;
+        aisDrag = false;
+        bisDrag = false;
+        bclick = false;
+      }
+    }
+  </script>
+</html>
