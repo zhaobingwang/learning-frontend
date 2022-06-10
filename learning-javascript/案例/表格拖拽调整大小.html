@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        width: 600px;
+        position: absolute;
+        left: 50%;
+        margin-left: -300px;
+      }
+      table {
+        border: 1px solid #000;
+        border-collapse: collapse;
+        text-align: center;
+        width: 100%;
+        /* margin-top: 100px; */
+      }
+      th {
+        border: 1px solid #000;
+      }
+      td {
+        border: 1px solid #000;
+      }
+      .drag-layer {
+        width: 6px;
+        /* height: 100px; */
+        background-color: gold;
+        display: block;
+        position: absolute;
+        cursor: e-resize;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="drag-layer"></div>
+      <table>
+        <thead>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>C</th>
+          <th>C</th>
+          <th>C</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>002</td>
+            <td>003</td>
+            <td>001</td>
+            <td>002</td>
+            <td>003</td>
+          </tr>
+          <tr>
+            <td>004</td>
+            <td>005</td>
+            <td>006</td>
+            <td>004</td>
+            <td>005</td>
+            <td>006</td>
+          </tr>
+          <tr>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+          </tr>
+          <tr>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+          </tr>
+          <tr>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+          </tr>
+          <tr>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+            <td>007</td>
+            <td>008</td>
+            <td>009</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    const table = document.querySelector('table');
+    table.addEventListener('mousemove', tableMouseMove);
+    const dragLayer = document.querySelector('.drag-layer');
+    dragLayer.addEventListener();
+    function tableMouseMove(evt) {
+      console.log('tableMouseMove', evt);
+      if (evt.target.nodeName === 'TD') {
+        const left = evt.target.offsetLeft + evt.target.offsetParent.offsetLeft;
+        const top = evt.target.offsetTop + evt.target.offsetParent.offsetTop;
+        const width = evt.target.offsetWidth;
+        const height = evt.target.offsetHeight;
+
+        dragLayer.style.left = left + width - 3 + 'px';
+        dragLayer.style.top = top + 'px';
+        // dragLayer.style.width = width + 'px';
+        dragLayer.style.height = height + 'px';
+      }
+    }
+  </script>
+</html>
