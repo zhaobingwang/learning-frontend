@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>鼠标拖拽调整div大小</title>
+    <style>
+      .dragbox {
+        width: 1010px;
+        height: 300px;
+        border: 1px solid #000;
+        clear: both;
+        /* box-sizing: border-box; */
+      }
+      .fl {
+        float: left;
+      }
+
+      .dragbox-left {
+        width: 500px;
+        height: 300px;
+        background-color: rgb(0, 195, 255);
+      }
+      .dragbox-right {
+        width: 500px;
+        height: 300px;
+        background-color: hotpink;
+      }
+
+      .dragbar {
+        /* left: 500px; */
+        width: 10px;
+        height: 300px;
+        /* position: absolute; */
+        cursor: e-resize;
+        background-color: gold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dragbox">
+      <div class="dragbox-left fl"></div>
+      <div class="dragbar fl"></div>
+      <div class="dragbox-right fl"></div>
+    </div>
+  </body>
+  <script>
+    const minWidth = 100;
+    const eleDragContainer = document.querySelector('.dragbox');
+    const eleDrag = document.querySelector('.dragbox > .dragbar');
+    const prev = eleDrag.previousElementSibling;
+    const next = eleDrag.nextElementSibling;
+    const dragbarWidth = 10;
+    const conrainerWidth = eleDragContainer.offsetWidth;
+    let dragging = false;
+    let clickX, leftOffset;
+    console.log(conrainerWidth);
+
+    eleDrag.addEventListener('mousedown', mousedown);
+
+    function mousedown(e) {
+      dragging = true;
+      leftOffset = eleDragContainer.offsetLeft;
+
+      document.addEventListener('mousemove', mousemove);
+      document.addEventListener('mouseup', mouseup);
+    }
+
+    function mousemove(e) {
+      e.preventDefault();
+      if (dragging) {
+        clickX = e.pageX;
+        if (
+          clickX >= leftOffset + minWidth &&
+          clickX <= conrainerWidth + leftOffset - minWidth - 2 - dragbarWidth
+        ) {
+          // 鼠标点击的位置X-父容器左侧偏移量
+          prev.style.width = clickX - leftOffset + 'px';
+
+          // 容器宽度-左侧元素宽度-总边框
+          next.style.width =
+            conrainerWidth - (clickX - leftOffset) - dragbarWidth - 2 + 'px';
+        }
+      }
+    }
+
+    function mouseup(e) {
+      dragging = false;
+      document.removeEventListener('mousemove', mousemove);
+      document.removeEventListener('mouseup', mouseup);
+    }
+
+    window.onload = function () {};
+  </script>
+</html>
