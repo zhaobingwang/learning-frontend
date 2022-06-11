@@ -28,7 +28,7 @@
       .drag-layer {
         width: 6px;
         /* height: 100px; */
-        background-color: gold;
+        /* background-color: gold; */
         display: block;
         position: absolute;
         cursor: e-resize;
@@ -39,14 +39,22 @@
     <div id="container">
       <div class="drag-layer"></div>
       <table>
-        <thead>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <!-- <thead>
           <th>A</th>
           <th>B</th>
           <th>C</th>
           <th>C</th>
           <th>C</th>
           <th>C</th>
-        </thead>
+        </thead> -->
         <tbody>
           <tr>
             <td>001</td>
@@ -59,8 +67,8 @@
           <tr>
             <td>004</td>
             <td>005</td>
-            <td>006</td>
-            <td>004</td>
+            <td colspan="2">006</td>
+            <!-- <td>004</td> -->
             <td>005</td>
             <td>006</td>
           </tr>
@@ -104,20 +112,67 @@
     const table = document.querySelector('table');
     table.addEventListener('mousemove', tableMouseMove);
     const dragLayer = document.querySelector('.drag-layer');
-    dragLayer.addEventListener();
+    dragLayer.addEventListener('mousedown', dragLayerMouseDown);
+
+    let currentOperateElement;
+    let currentCellWidth;
     function tableMouseMove(evt) {
-      console.log('tableMouseMove', evt);
+      console.log('tableMouseMove');
       if (evt.target.nodeName === 'TD') {
+        currentOperateElement = document.querySelector(
+          `table > colgroup > col:nth-of-type(${evt.target.cellIndex + 1})`
+        );
+        // currentOperateElement = evt.target;
+        console.log(currentOperateElement);
+
+        console.log('currentOperateElement', currentOperateElement);
         const left = evt.target.offsetLeft + evt.target.offsetParent.offsetLeft;
         const top = evt.target.offsetTop + evt.target.offsetParent.offsetTop;
-        const width = evt.target.offsetWidth;
+        currentCellWidth = evt.target.offsetWidth;
         const height = evt.target.offsetHeight;
 
-        dragLayer.style.left = left + width - 3 + 'px';
+        dragLayer.style.left = left + currentCellWidth - 3 + 'px';
         dragLayer.style.top = top + 'px';
         // dragLayer.style.width = width + 'px';
         dragLayer.style.height = height + 'px';
       }
+    }
+
+    let dragging = false;
+    let leftOffset;
+    let startClientX;
+    let startDragLayerLeft;
+
+    function dragLayerMouseDown(evt) {
+      table.removeEventListener('mousemove', tableMouseMove);
+      dragging = true;
+      startClientX = evt.clientX;
+      startDragLayerLeft = evt.target.offsetLeft;
+
+      table.addEventListener('mousemove', mouseMoveWhenDrag);
+      document.addEventListener('mouseup', dragLayerMouseUp);
+    }
+    function mouseMoveWhenDrag(evt) {
+      evt.preventDefault();
+
+      // console.log('ing', eleOperation);
+      if (dragging) {
+        const increase = evt.clientX - startClientX;
+        console.log('increase', increase, currentCellWidth);
+        currentOperateElement.style.width = currentCellWidth + increase + 'px';
+        console.log(
+          'currentOperateElement.style.width',
+          currentOperateElement.style.width
+        );
+        dragLayer.style.left = startDragLayerLeft + increase + 'px';
+        // console.log('dragLayer.style.left', dragLayer.style.left);
+      }
+    }
+    function dragLayerMouseUp(evt) {
+      dragging = false;
+      table.addEventListener('mousemove', tableMouseMove);
+      table.removeEventListener('mousemove', mouseMoveWhenDrag);
+      document.removeEventListener('mouseup', document);
     }
   </script>
 </html>
