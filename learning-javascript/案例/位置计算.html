@@ -10,10 +10,27 @@
         margin: 0;
         padding: 0;
       }
+      body {
+        background-color: rgb(74, 198, 236);
+        overflow: auto;
+        width: 1000px;
+      }
+      .message {
+        height: 100px;
+        background-color: rgb(220, 220, 220);
+      }
+      .table-container {
+        width: 500px;
+        background-color: aquamarine;
+        height: 300px;
+        overflow: auto;
+      }
       table {
-        word-break: break-all;
+        width: 100%;
+        background-color: burlywood;
+        /* word-break: break-all; */
         border-collapse: collapse;
-        margin: 30px;
+        /* margin: 30px; */
       }
       td {
         border: 1px solid #000;
@@ -22,40 +39,80 @@
         width: 300px;
         height: 50px;
       }
+      img {
+        width: 600px;
+      }
     </style>
   </head>
   <body>
-    <button>123</button>
-    <div class="container">
-      <table>
-        <colgroup>
-          <col />
-          <col />
-          <col />
-        </colgroup>
-        <tbody>
-          <tr>
-            <td>111</td>
-            <td>222</td>
-            <td>3333</td>
-          </tr>
-          <tr>
-            <td>444</td>
-            <td>555</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>777</td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="root">
+      <div class="message"></div>
+      <div>
+        <button>123</button>
+      </div>
+      <div class="table-container">
+        <table>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>1122213333333323333333333fdffffffffffffff</td>
+              <td>22sasdasdddddddddddddddddddd2ffffffffffffff2</td>
+              <td>33dddddddddddddddddddddsssssssssss3ffffffffffffffffffff3</td>
+            </tr>
+            <tr>
+              <td>444</td>
+              <td>555</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>777</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <img
+          src="../images/点击事件中的offsetX clientX pageX screenY.png"
+          alt=""
+        />
+      </div>
     </div>
   </body>
   <script>
     document.addEventListener('click', (e) => {
-      console.log(e.target, e.target.getBoundingClientRect());
+      console.log(e, e.target, e.target.getBoundingClientRect());
+      let message = '';
+      // 事件对象与目标节点的内填充边在 X，Y 轴方向上的偏移量
+      const offsetX = e.offsetX;
+      const offsetY = e.offsetY;
+      message += `#offsetX:${offsetX},offsetY:${offsetY} #事件对象与目标节点的内填充边在 X，Y 轴方向上的偏移量<br>`;
+
+      // 客户端区域的水平坐标
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+      message += `#clientX:${clientX},clientY:${clientY} #客户端区域的水平坐标<br>`;
+
+      // 相对于整个文档的 X,Y（水平,垂直）坐标
+      const pageX = e.pageX;
+      const pageY = e.pageY;
+      message += `#pageX:${pageX},pageY:${pageY} #相对于整个文档的 X,Y（水平,垂直）坐标<br>`;
+
+      // 鼠标在全局（屏幕）中的水平/垂直坐标（偏移量）
+      const screenX = e.screenX;
+      const screenY = e.screenY;
+      message += `#screenX:${screenX},screenY:${screenY} #鼠标在全局（屏幕）中的水平/垂直坐标（偏移量）<br>`;
+
+      setMessage(message);
     });
+
+    function setMessage(message) {
+      document.querySelector('.message').innerHTML = message;
+    }
   </script>
 </html>
