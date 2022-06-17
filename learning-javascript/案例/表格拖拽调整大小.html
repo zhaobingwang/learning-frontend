@@ -7,31 +7,48 @@
     <title>Document</title>
     <style>
       #container {
-        width: 600px;
-        position: absolute;
-        left: 50%;
-        margin-left: -300px;
+        width: 500px;
+        /* overflow-x: auto; */
+        /* background-color: gold; */
+        /* width: 600px; */
+        /* position: absolute; */
+        /* left: 50%; */
+        /* margin-left: -300px; */
       }
       table {
         border: 1px solid #000;
         border-collapse: collapse;
-        text-align: center;
+        /* text-align: center; */
         width: 100%;
+        /* word-break: break-all; */
         /* margin-top: 100px; */
       }
       th {
-        border: 1px solid #000;
+        /* border: 1px solid #000; */
       }
       td {
         border: 1px solid #000;
       }
       .drag-layer {
-        width: 6px;
+        /* width: 6px; */
         /* height: 100px; */
         /* background-color: gold; */
+        box-sizing: border-box;
+        border: 3px solid red;
         display: block;
         position: absolute;
         cursor: e-resize;
+      }
+      /* .drag-top {
+        width: 6px;
+        cursor: e-resize;
+      }
+      .drag-right {
+        width: 6px;
+        cursor: e-resize;
+      } */
+      col {
+        min-width: 100px;
       }
     </style>
   </head>
@@ -43,66 +60,32 @@
           <col />
           <col />
           <col />
-          <col />
-          <col />
-          <col />
         </colgroup>
-        <!-- <thead>
-          <th>A</th>
-          <th>B</th>
-          <th>C</th>
-          <th>C</th>
-          <th>C</th>
-          <th>C</th>
-        </thead> -->
         <tbody>
           <tr>
-            <td>001</td>
-            <td>002</td>
-            <td>003</td>
-            <td>001</td>
-            <td>002</td>
-            <td>003</td>
+            <td>1</td>
+            <td>2</td>
+            <td contenteditable="true">3</td>
           </tr>
           <tr>
-            <td>004</td>
-            <td>005</td>
-            <td colspan="2">006</td>
-            <!-- <td>004</td> -->
-            <td>005</td>
-            <td>006</td>
+            <td>1</td>
+            <td>2</td>
+            <td contenteditable="true">3</td>
           </tr>
           <tr>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
+            <td>1</td>
+            <td>22222222222222222222222222222222222222222222222222222222</td>
+            <td>33333333333333333333333333333333333333333333333333333333</td>
           </tr>
           <tr>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
+            <td>1</td>
+            <td>22222222222222222222222222222222222222222222222222222222</td>
+            <td>33333333333333333333333333333333333333333333333333333333</td>
           </tr>
           <tr>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
-          </tr>
-          <tr>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
-            <td>007</td>
-            <td>008</td>
-            <td>009</td>
+            <td></td>
+            <td>22222222222222222222222222222222222222222222222222222222</td>
+            <td>33333333333333333333333333333333333333333333333333333333</td>
           </tr>
         </tbody>
       </table>
@@ -125,15 +108,24 @@
         // currentOperateElement = evt.target;
         console.log(currentOperateElement);
 
+        console.log(
+          'scrollLeft ',
+          evt.target.parentNode.parentNode.parentNode.parentNode.scrollLeft
+        );
         console.log('currentOperateElement', currentOperateElement);
-        const left = evt.target.offsetLeft + evt.target.offsetParent.offsetLeft;
+        const left =
+          evt.target.offsetLeft +
+          evt.target.offsetParent.offsetLeft -
+          evt.target.parentNode.parentNode.parentNode.parentNode.scrollLeft;
         const top = evt.target.offsetTop + evt.target.offsetParent.offsetTop;
         currentCellWidth = evt.target.offsetWidth;
         const height = evt.target.offsetHeight;
 
-        dragLayer.style.left = left + currentCellWidth - 3 + 'px';
+        // dragLayer.style.left = left + currentCellWidth - 3 + 'px';
+        dragLayer.style.left = left + 'px';
+
         dragLayer.style.top = top + 'px';
-        // dragLayer.style.width = width + 'px';
+        dragLayer.style.width = currentCellWidth + 'px';
         dragLayer.style.height = height + 'px';
       }
     }
