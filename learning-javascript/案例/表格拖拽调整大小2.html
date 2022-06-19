@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      div {
+        margin: 30px;
+      }
+
+      #tableArea {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td {
+        width: 300px;
+        height: 30px;
+        font-size: 20px;
+        border: 1px solid #000;
+        padding: 3px 5px;
+      }
+      /* td:hover {
+        background-color: red;
+      } */
+
+      .drag-layer {
+        position: absolute;
+        /* background-color: red; */
+      }
+      .drag-layer-left {
+        background-color: red;
+        width: 3px;
+        height: 20px;
+      }
+      .drag-layer-top {
+        background-color: red;
+        width: 3px;
+        height: 20px;
+      }
+      .drag-layer-right {
+        background-color: red;
+        width: 3px;
+        height: 20px;
+      }
+      .drag-layer-bottom {
+        background-color: red;
+        width: 3px;
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button id="addTable">Add table</button>
+    </div>
+
+    <div id="tableArea"></div>
+  </body>
+
+  <script>
+    const eleAddTable = document.getElementById('addTable');
+    eleAddTable.addEventListener('click', (e) => addTable(3, 3, e));
+
+    function addTable(rows, columns, e) {
+      const tableWrapper = document.createElement('div');
+      tableWrapper.setAttribute('class', 'table-wrapper');
+
+      const tableDragLayer = document.createElement('div');
+      tableDragLayer.setAttribute('class', 'drag-layer');
+
+      const dragLayerLeft = document.createElement('div');
+      dragLayerLeft.setAttribute('class', 'drag-layer-left');
+      tableDragLayer.appendChild(dragLayerLeft);
+
+      const dragLayerTop = document.createElement('div');
+      dragLayerTop.setAttribute('class', 'drag-layer-top');
+      tableDragLayer.appendChild(dragLayerTop);
+
+      const dragLayerRight = document.createElement('div');
+      dragLayerRight.setAttribute('class', 'drag-layer-right');
+      tableDragLayer.appendChild(dragLayerRight);
+
+      const dragLayerBottom = document.createElement('div');
+      dragLayerBottom.setAttribute('class', 'drag-layer-bottom');
+      tableDragLayer.appendChild(dragLayerBottom);
+
+      tableWrapper.appendChild(tableDragLayer);
+
+      const table = document.createElement('table');
+      const colgroup = document.createElement('colgroup');
+      const tbody = document.createElement('tbody');
+      for (let i = 0; i < rows; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < columns; j++) {
+          if (i === 0) {
+            const col = document.createElement('col');
+            colgroup.appendChild(col);
+          }
+          const td = document.createElement('td');
+          td.setAttribute('contenteditable', true);
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      table.appendChild(colgroup);
+      table.appendChild(tbody);
+
+      tableWrapper.appendChild(table);
+
+      document.getElementById('tableArea').appendChild(tableWrapper);
+
+      tableWrapper.addEventListener('mouseenter', mouseEnter);
+      tableWrapper.addEventListener('mouseleave', mouseLeave);
+    }
+
+    let currentTableWrapper;
+    function mouseEnter(e) {
+      currentTableWrapper = e.target;
+      currentTableWrapper.addEventListener('mousemove', tableWrapperMousemove);
+    }
+
+    function mouseLeave() {
+      currentTableWrapper.removeEventListener(
+        'mousemove',
+        tableWrapperMousemove
+      );
+    }
+
+    function tableWrapperMousemove(e) {
+      console.log('mv', e);
+    }
+
+    function createDragLayer(height) {
+      const div = document.createElement('div');
+      div.style.top = 0;
+      div.style.right = 0;
+      div.style.width = '3px';
+      div.style.position = 'absolute';
+      div.style.cursor = 'col-resize';
+      div.style.backgroundColor = 'gold';
+      div.style.height = height + 'px';
+      return div;
+    }
+  </script>
+</html>
