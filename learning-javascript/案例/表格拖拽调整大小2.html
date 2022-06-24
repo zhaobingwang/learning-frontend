@@ -103,6 +103,9 @@
         for (let j = 0; j < columns; j++) {
           if (i === 0) {
             const col = document.createElement('col');
+            col.setAttribute('style', 'width:100px');
+            col.innerHTML = '\n';
+            // col.innerHTML = 'aa';
             colgroup.appendChild(col);
           }
           const td = document.createElement('td');

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object.assign()</title>
+  </head>
+  <body>
+    <script>
+      // 尝试一下
+      let target = { a: 1, b: 2 };
+      let source = { b: 3, c: 4 };
+      let returnedTarget = Object.assign(target, source);
+      console.log('尝试一下');
+      console.log('target', target); // target {a: 1, b: 3, c: 4}
+      console.log('returnedTarget', returnedTarget); // returnedTarget {a: 1, b: 3, c: 4}
+
+      // 对象中包含对象
+      target = { student: { name: 'zhangsan', age: 18 } };
+      source = { student: { name: 'lisi', age: 20, gender: 'male' } };
+      returnedTarget = Object.assign(target, source);
+      console.log('对象中包含对象');
+      console.log('target', target); // target {a: 1, b: 3, c: 4}
+      console.log('returnedTarget', returnedTarget); // returnedTarget {a: 1, b: 3, c: 4}
+    </script>
+  </body>
+</html>
