@@ -35,9 +35,10 @@
 
     document.getElementById('getContent').addEventListener('click', (e) => {
       const htmlContent = tinymce.activeEditor.getContent();
-      const textContent = tinymce.activeEditor.getContent({ format: 'text' });
+      const textContent = tinymce.activeEditor.getContent({ format: 'bold' });
       console.log('htmlContent', htmlContent);
       console.log('textContent', textContent);
+      console.log('aa', tinymce.activeEditor.selection.getNode().nodeName);
     });
 
     document.getElementById('setContent').addEventListener('click', (e) => {
