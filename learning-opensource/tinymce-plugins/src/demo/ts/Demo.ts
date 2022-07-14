@@ -9,5 +9,5 @@ Plugin();
 tinymce.init({
   selector: 'textarea.tinymce',
   plugins: 'code tinymce-plugins',
-  toolbar: 'tinymce-plugins'
+  toolbar: 'tinymce-plugins',
 });
