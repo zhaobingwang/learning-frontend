@@ -1,18 +1,20 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <editor
+      :init="{
+        plugins: 'lists link image table code help wordcount'
+      }"
+    />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Editor from '@tinymce/tinymce-vue'
 
 export default {
-  name: 'HomeView',
+  name: 'app',
   components: {
-    HelloWorld
+    editor: Editor
   }
 }
 </script>
