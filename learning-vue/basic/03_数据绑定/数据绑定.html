@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 准备好一个容器 -->
+    <div id="root" class="root">
+      <!-- 普通写法 -->
+      <!-- 单向数据绑定：<input type="text" v-bind:value="name" />
+      <br />
+      双向数据绑定：<input type="text" v-model:value="name" /> -->
+
+      <!-- 简写 -->
+      单向数据绑定：<input type="text" :value="name" />
+      <br />
+      双向数据绑定：<input type="text" v-model="name" />
+    </div>
+
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+    <script type="text/javascript">
+      Vue.config.productionTip = false // 阻止vue在启动时生成生产提示
+
+      // 创建Vue实例
+      const x = new Vue({
+        el: '.root', // el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串
+        data: {
+          name: 'Vue'
+        }
+      })
+    </script>
+  </body>
+</html>

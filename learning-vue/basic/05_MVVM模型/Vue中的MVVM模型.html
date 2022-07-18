@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <!-- MVVM: Model,View,ViewModel -->
+  <!-- MVVM模型 
+    1. M: 模型（Model），data中的数据
+    2. V: 视图（View），模板中的代码
+    3. VM: 视图模型（ViewModel），Vue实例
+    观察发现: 
+        1. data中的所有属性，最后都出现在了vm身上。
+        2. vm身上所有的属性及Vue原型上的所有属性，在Vue模板中都可以直接使用。
+-->
+  <body>
+    <!-- View -->
+    <div id="root">
+      <h1>Hello,{{name}}.</h1>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script type="text/javascript">
+      Vue.config.productionTip = false
+
+      new Vue({
+        // ViewModel
+        el: '#root',
+        data: {
+          name: 'vue' // Model
+        }
+      })
+    </script>
+  </body>
+</html>

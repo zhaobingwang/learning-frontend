@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+
+     -->
+    <div id="root">
+      <h2>列表过滤</h2>
+      <input type="text" placeholder="请输入名字" v-model="keyword" /><button>
+        Search
+      </button>
+      <ul>
+        <li v-for="(person, index) in filterPersons" :key="person.id">
+          {{person.name}} - {{person.age}}
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script src="../js/vue.js"></script>
+  <script>
+    Vue.config.productionTip = false;
+
+    //#region 用watch实现
+    // const vm = new Vue({
+    //   el: '#root',
+    //   data: {
+    //     keyword: '',
+    //     persons: [
+    //       { id: '001', name: '张三', age: '20' },
+    //       { id: '002', name: '李四', age: '22' },
+    //       { id: '003', name: '王五', age: '18' },
+    //       { id: '004', name: '王二麻子', age: '18' },
+    //     ],
+    //     filterPersons: [],
+    //   },
+    //   watch: {
+    //     // keyword(newVal) {
+    //     //   this.persons.filters((person) => {
+    //     //     return person.name.indexOf(newVal) !== -1;
+    //     //   });
+    //     // },
+    //     keyword: {
+    //       immediate: true,
+    //       handler(newVal) {
+    //         this.filterPersons = this.persons.filter((person) => {
+    //           return person.name.indexOf(newVal) !== -1;
+    //         });
+    //       },
+    //     },
+    //   },
+    // });
+    //#endregion
+
+    // 用computed
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        keyword: '',
+        persons: [
+          { id: '001', name: '张三', age: '20' },
+          { id: '002', name: '李四', age: '22' },
+          { id: '003', name: '王五', age: '18' },
+          { id: '004', name: '王二麻子', age: '18' },
+        ],
+        // filterPersons: [],
+      },
+      computed: {
+        filterPersons() {
+          return this.persons.filter((person) => {
+            return person.name.indexOf(this.keyword) !== -1;
+          });
+        },
+      },
+    });
+  </script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+    之前学过的指令
+        v-bind: 单选绑定解析表达式，可以简写为 :xxx
+        v-model: 双向数据绑定
+        v-for: 遍历数组/对象/字符串
+        v-on: 绑定事件监听，可以简写为@
+        v-if: 条件渲染（动态控制节点是否存在）
+        v-else: 条件渲染（动态控制节点是否存在）
+        v-show: 条件渲染（动态控制节点是否存在）
+
+    v-once指令:
+        1. v-once所在节点在初次动态渲染后，就视为静态内容了。
+        2. 以后数据的改变不会引起v-once所在结构的更新，可以用于优化性能。
+     -->
+    <div id="root">
+        <h2 v-once>初始值是: {{n}}</h2>
+        <h2>当前值是: {{n}}</h2>
+        <button @click="n++">Add</button>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: '#root',
+        data: {
+            n: 1
+        }
+    })
+</script>
+
+</html>

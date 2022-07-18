@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      section {
+        height: 60px;
+        background-color: greenyellow;
+        margin-top: 10px;
+      }
+
+      section.section-child1 {
+        height: 20px;
+        background-color: gold;
+        margin-left: 10px;
+      }
+      ul {
+        background-color: goldenrod;
+        width: 200px;
+        height: 200px;
+        overflow-y: auto;
+      }
+      li {
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+          Vue中的事件修饰符：
+            1. prevent: 阻止默认事件（常用）;
+            2. stop: 阻止事件冒泡（常用）;
+            3. once: 事件只触发一次（常用）;
+            4. capture: 使用事件的捕获模式;
+            5. self: 只有event.target是当前操作的元素时才触发事件;
+            6. passive: 事件的默认行为立即执行，无需等待事件回调执行完毕;
+       -->
+    <div id="root">
+      <h2>Hello,{{name}}</h2>
+
+      <!-- prevent: 阻止默认事件（常用） -->
+      <section>
+        <strong>prevent:</strong>
+        <a href="https://www.baidu.com" @click.prevent="showInfo"
+          >click.prevent</a
+        >
+      </section>
+
+      <!-- stop: 阻止事件冒泡（常用） -->
+      <section @click="showInfo">
+        <strong>stop:</strong>
+        <button @click.stop="showInfo">click.stop</button>
+        <!-- 修饰符可以连续写 -->
+        <!-- <a href="https://www.baidu.com" @click.prevent.stop="showInfo"
+          >click.stop</a
+        > -->
+      </section>
+
+      <!-- once: 事件只触发一次（常用） -->
+      <section>
+        <strong>once:</strong>
+        <button @click.once="showInfo">click.once</button>
+      </section>
+
+      <!-- capture: 使用事件的捕获模式 -->
+      <section @click.capture="showLog(1)">
+        <strong>capture:</strong>
+        <section class="section-child1" @click="showLog(2)">
+          click.capture
+        </section>
+      </section>
+
+      <!-- self: 只有event.target是当前操作的元素时才触发事件 -->
+      <section @click.self="showLog2">
+        <strong>stop:</strong>
+        <button @click="showLog2">click.stop</button>
+      </section>
+
+      <!-- passive: 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+
+      <!-- <ul @scroll="foo"> -->
+      <ul @wheel.passive="foo">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </ul>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+      const vm = new Vue({
+        el: '#root',
+        data: {
+          name: 'Vue'
+        },
+        methods: {
+          showInfo(e) {
+            // e.preventDefault()   // 阻止默认行为
+            // e.stopPropagation()  // 阻止事件冒泡
+            alert('showInfo called.')
+          },
+          showLog(data) {
+            console.log('showLog called.', data)
+          },
+          showLog2(e) {
+            console.log('showLog called.', e.target)
+          },
+          foo() {
+            for (let i = 0; i < 1000; i++) {
+              console.log(1)
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

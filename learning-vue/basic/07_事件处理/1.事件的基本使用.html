@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件的基本使用</title>
+  </head>
+  <body>
+    <!-- 
+          事件的基本使用：
+            1. 使用v-on:xxx 或 @xxx绑定事件，其中xxx是事件名;
+            2. 事件的回调需要配置在methods对象中，最终会在vm早上;
+            3. methods中配置的函数，不要用箭头函数！否则this就不是vm了;
+            4. methods中配置的函数，都是被Vue所管理的函数，this的指向是vm或组件实例对象;
+            5. @click="foo"和@click="foo($event)"效果一致，但后者可以传参;
+       -->
+    <div id="root">
+      <button v-on:click="showLog">普通写法</button>
+      <button @click="showLog">简写</button>
+      <button @click="showLog2(1)">传参(event参数丢失)</button>
+      <button @click="showLog3($event,2)">
+        传参(包含event)，event在参数列表中的位置随意
+      </button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#root',
+        data: {
+          name: 'Vue'
+        },
+        methods: {
+          showLog() {
+            console.log('showLog called')
+          },
+          showLog2(val) {
+            console.log(val)
+          },
+          showLog3($event, val) {
+            console.log($event, val)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
