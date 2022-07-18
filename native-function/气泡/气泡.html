@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table-container {
+        margin-top: 100px;
+        background-color: gold;
+        width: 500px;
+        height: 500px;
+      }
+      .bubble-box-container {
+      }
+      .bubble-box {
+        width: 100px;
+        border: 1px solid #000;
+        text-align: center;
+        position: relative;
+        left: 50%;
+        margin-left: -50px;
+        top: -40px;
+
+      }
+      .trangle{
+        margin-top: 10px;
+        position: relative;
+        left: 50%;
+        margin-left: -15px;
+        text-align: center;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 15px solid black;
+        border-bottom: 15px solid transparent;
+      }
+      td {
+        width: 200px;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="table-container">
+        <div class="bubble-box-container">
+          <div class="bubble-box">
+            <button>a</button>
+            <button>a</button>
+            <button>a</button>
+            <div class="trangle">
+          </div>
+        </div>
+        <table>
+          <tr>
+            <td contenteditable="true"></td>
+            <td contenteditable="true"></td>
+            <td contenteditable="true"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.addEventListener('focusin', (e) => {
+      if (e.target.nodeName === 'TD') {
+        console.log('focus', e);
+      }
+    });
+  </script>
+</html>

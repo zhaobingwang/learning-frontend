@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #rightMenu {
+        list-style: none;
+        background-color: bisque;
+        width: 80px;
+        margin: 0;
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        display: none;
+      }
+      #rightMenu li {
+        border-bottom: solid 1px darkgray;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="rightMenu">
+      <li>新建</li>
+      <li>打开</li>
+      <li>保存</li>
+      <li>关闭</li>
+    </ul>
+  </body>
+  <script>
+    const rm = document.querySelector('#rightMenu');
+    document.documentElement.oncontextmenu = function (e) {
+      e = e || window.event;
+      const x = e.clientX;
+      const y = e.clientY;
+      const rmWidth = parseInt(rm.offsetWidth);
+      const pageWidth = document.documentElement.clientWidth;
+      console.log(x, y, rmWidth, pageWidth);
+      if (x + rmWidth < pageWidth) {
+        rm.style.left = x + 'px';
+        rm.style.top = y + 'px';
+      } else {
+        rm.style.right = x + 'px';
+        rm.style.top = y + 'px';
+      }
+      rm.style.display = 'block';
+      return false;
+    };
+    document.documentElement.onclick = function () {
+      rm.style.display = 'none';
+    };
+  </script>
+</html>
