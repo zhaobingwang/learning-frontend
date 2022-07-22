@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .popover {
+            padding: 10px;
+            border: 1px solid black;
+            display: none;
+            width: 300px;
+            height: 200px;
+        }
+
+        .popover.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Popover</h1>'
+    <hr>
+    <div>
+        <button id="trigger">click me</button>
+        <div id="popover" class="popover">
+            i am popover
+            <button id="hide">hide popover</button>
+        </div>
+    </div>
+</body>
+<script>
+    var isVisible = false;
+    var trigger = document.getElementById('trigger');
+    var hide = document.getElementById('hide');
+    var popover = document.getElementById('popover');
+    function showPopover() {
+        isVisible = true;
+        popover.classList.add('show');
+    }
+    function hidePopover() {
+        isVisible = false;
+        popover.classList.remove('show');
+    }
+    function togglePopover() {
+        if (isVisible) {
+            hidePopover();
+        } else {
+            showPopover();
+        }
+    }
+    trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        togglePopover();
+    });
+    hide.addEventListener('click', function (e) {
+        hidePopover();
+    });
+    document.addEventListener('click', function (e) {
+        if (isVisible &&
+            e.target !== popover &&
+            e.target.parentElement !== popover
+        ) {
+            hidePopover();
+        }
+    });
+</script>
+
+</html>
